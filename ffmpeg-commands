@@ -1,0 +1,8 @@
+# Copy subs with fonts (including styles)
+ffmpeg -i video.mp4 -i subs.mkv -c copy -map 0 -map 1:s -map 1:t new.mkv
+
+# Extract fonts
+ffmpeg -dump_attachment:t "" -i input.mkv
+
+# Reencode video in real time
+ffmpeg -i video.mp4 -map 0 -c:s copy -c:a copy -c:v libx264 -crf 23 -preset veryfast -pix_fmt yuv420p -vf scale=-1:720 720p.mkv

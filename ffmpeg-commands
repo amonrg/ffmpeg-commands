@@ -6,3 +6,16 @@ ffmpeg -dump_attachment:t "" -i input.mkv
 
 # Reencode video in real time
 ffmpeg -i video.mp4 -map 0 -c:s copy -c:a copy -c:v libx264 -crf 23 -preset veryfast -pix_fmt yuv420p -vf scale=-1:720 720p.mkv
+
+# Take screenshots from a video
+ffmpeg -i "video" -vf select='between(t,fromseconds,toseconds)' -q:v 1 -vsync 0 output%d.jpg
+
+# Timing subtitles from a video to a clip 
+## To match the subtitles from a video to a clip, keep the source video timestamps:
+## -ss: time_from
+## -to: time_to
+## -copyts: copy timestamps
+## -sn:  to disable automatic inclusion of subtitles; if not specified, subtitles will be included as softsubs
+## -vf subtitles=subs_source: can be either the input video or a separate file containing the subtitles
+## -ss: must be specified to reset timestamps after seeking; it must be the same as the initial -ss (before -i)
+ffmpeg -ss -to -copyts -i input -sn -vf subtitles=subs_source -ss output

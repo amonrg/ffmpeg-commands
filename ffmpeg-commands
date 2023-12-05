@@ -19,3 +19,11 @@ ffmpeg -i "video" -vf select='between(t,fromseconds,toseconds)' -q:v 1 -vsync 0 
 ## -vf subtitles=subs_source: can be either the input video or a separate file containing the subtitles
 ## -ss: must be specified to reset timestamps after seeking; it must be the same as the initial -ss (before -i)
 ffmpeg -ss -to -copyts -i input -sn -vf subtitles=subs_source -ss output
+
+# Make a GIF from video
+## -ss: time_from
+## -pix_fmt rgb24: pixel format
+## -r: frame rate
+## -s: resolution
+## -t: offset time
+ffmpeg -i "video" -ss 00:00:00.000 -pix_fmt rgb24 -r 10 -s 320x240 -t 00:00:10.000 output.gif

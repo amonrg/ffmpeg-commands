@@ -27,3 +27,6 @@ ffmpeg -ss -to -copyts -i input -sn -vf subtitles=subs_source -ss output
 ## -s: resolution
 ## -t: offset time
 ffmpeg -i "video" -ss 00:00:00.000 -pix_fmt rgb24 -r 10 -s 320x240 -t 00:00:10.000 output.gif
+
+# Reencode livestream
+ffmpeg -protocol_whitelist file,http,https,tcp,tls -i "org_file.m3u8" -c copy -bsf:a aac_adtstoasc output.mp4
